@@ -1,6 +1,5 @@
-// ignore: library_prefixes
 import 'dart:developer';
-
+// ignore: library_prefixes
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 // ignore: library_prefixes
 import 'package:google_sign_in/google_sign_in.dart' as googleAuth;

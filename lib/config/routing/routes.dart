@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:prima_studio/config/routing/arguments/profile/account_setting_args.dart';
 import 'package:prima_studio/ui/pages/pages.dart';
@@ -7,13 +9,13 @@ import './arguments/arguments.dart';
 
 class AppRouter {
   Route onRoute(RouteSettings settings) {
-    // ignore: avoid_print
-    print('Route: ${settings.name}');
+    log('Route: ${settings.name}');
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
         );
+
       // case "/":
       //   return MaterialPageRoute(
       //     builder: (context) => const TestSearchPage(),
