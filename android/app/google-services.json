@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "699182918325",
+    "project_id": "prima-1d716",
+    "storage_bucket": "prima-1d716.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699182918325:android:8f0aeae125d7551f616cfc",
+        "android_client_info": {
+          "package_name": "com.example.prima_studio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699182918325-j8q6a1ckm7ubdekeae228chlirji8hsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3sn90jqdxp2xgu_IqKvfnCjakdU4BE1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699182918325-j8q6a1ckm7ubdekeae228chlirji8hsk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "699182918325-f135ve6fu1cn3rrs3gjte5kqjtmt4c5c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.primaMovie"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

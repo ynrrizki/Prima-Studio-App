@@ -1,0 +1,9 @@
+export 'banner_widget.dart';
+export 'event_card_widget.dart';
+export 'long_movie_card_widget.dart';
+export 'more_like_this_card_widget.dart';
+export 'movie_card_widget.dart';
+export 'prima_studio.dart';
+export 'profile_section_widget.dart';
+export 'search_field_widget.dart';
+export 'text_field_widget.dart';
