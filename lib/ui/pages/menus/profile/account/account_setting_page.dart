@@ -15,8 +15,8 @@ class AccountSettingPage extends StatefulWidget {
 
 class _AccountSettingPageState extends State<AccountSettingPage> {
   final nameController = TextEditingController();
-
   final descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

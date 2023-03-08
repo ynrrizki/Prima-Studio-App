@@ -16,17 +16,15 @@ class AppRouter {
           builder: (context) => const SplashScreen(),
         );
 
-      // case "/":
-      //   return MaterialPageRoute(
-      //     builder: (context) => const TestSearchPage(),
-      //   );
-
-      // Module Auth
+      // Auth
+      // Auth > Login
       case "/auth-login":
         return PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
           pageBuilder: (_, __, ___) => const LoginPage(),
         );
+
+      // Auth > Regis
       case "/auth-regis":
         return Transition(
           transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
@@ -35,14 +33,14 @@ class AppRouter {
       case "/auth-verif":
       case "/auth-forgot":
 
-      // Module Menu
+      // Menu
       case "/menu":
         return PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
           pageBuilder: (_, __, ___) => const MenuPage(),
         );
 
-      // - Film
+      // Menu > Film
       case "/film-all":
         final args = settings.arguments as FilmAllArguments;
         return MaterialPageRoute(
@@ -73,7 +71,7 @@ class AppRouter {
           ),
         );
 
-      // - Profile
+      // Menu > Profile
       case "/profile-account":
         final args = settings.arguments as AccountSettingArguments;
         return Transition(
@@ -89,10 +87,10 @@ class AppRouter {
         );
       case "/profile-notif":
 
-      // - Search
+      // Menu > Search
       case "/search":
 
-      // Module Events
+      // Events
       case "/event":
       default:
         return _errorRoute();

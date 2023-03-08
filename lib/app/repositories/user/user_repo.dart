@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: library_prefixes
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -58,7 +60,7 @@ class UserRepository extends Repository {
 
   @override
   Future<void> updateUser(User user) async {
-    print('ini adalah id: ${user.id}');
+    log('ini adalah id: ${user.id}');
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)

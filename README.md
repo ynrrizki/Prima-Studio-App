@@ -1,4 +1,4 @@
-# prima_studio
+# Prima Studio
 
 A new Flutter project.
 

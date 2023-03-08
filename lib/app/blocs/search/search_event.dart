@@ -11,7 +11,8 @@ class LoadSearch extends SearchEvent {}
 
 class SearchFilm extends SearchEvent {
   final String title;
-  const SearchFilm({required this.title});
+  final String genre;
+  const SearchFilm({required this.title, required this.genre});
 
   @override
   List<Object> get props => [title];

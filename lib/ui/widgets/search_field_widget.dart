@@ -18,6 +18,7 @@ class SearchFieldWidget extends StatelessWidget {
     return TextField(
       controller: searchController,
       onChanged: onChanged,
+      autofocus: false,
       style: GoogleFonts.plusJakartaSans(
         color: Colors.black,
       ),

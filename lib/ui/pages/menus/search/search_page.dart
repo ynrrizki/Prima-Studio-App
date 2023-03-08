@@ -1,3 +1,5 @@
+import 'dart:developer' as debug;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +23,21 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     context.read<SearchBloc>().add(
-          const SearchFilm(title: ''),
+          const SearchFilm(title: '', genre: ''),
         );
+    if (selectedIndex == null) {
+      context.read<SearchBloc>().add(
+            const SearchFilm(title: '', genre: ''),
+          );
+    }
   }
 
   final searchController = TextEditingController();
-  bool isCheck = false;
-  List filter = ['All Film', 'Drama', 'Fantasi', 'Romance', 'Horor'];
+  List filter = ['Drama', 'Fantasi', 'Romance', 'Horor'];
+  bool? selectedInput;
+  int? selectedIndex;
+  String selectedGenre = '';
 
-  List check = [true, false, false, false, false];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -71,13 +79,17 @@ class _SearchPageState extends State<SearchPage> {
                             searchController: searchController,
                             onSubmitted: (value) {
                               context.read<SearchBloc>().add(
-                                    SearchFilm(title: searchController.text),
+                                    SearchFilm(
+                                      title: searchController.text,
+                                      genre: selectedGenre,
+                                    ),
                                   );
                             },
                             onChanged: (value) {
                               if (value == '') {
                                 context.read<SearchBloc>().add(
-                                      SearchFilm(title: value),
+                                      SearchFilm(
+                                          title: value, genre: selectedGenre),
                                     );
                               }
                             },
@@ -88,7 +100,10 @@ class _SearchPageState extends State<SearchPage> {
                           heroTag: '<fab-banner-search>',
                           onPressed: () {
                             context.read<SearchBloc>().add(
-                                  SearchFilm(title: searchController.text),
+                                  SearchFilm(
+                                    title: searchController.text,
+                                    genre: selectedGenre,
+                                  ),
                                 );
                           },
                           shape: RoundedRectangleBorder(
@@ -109,41 +124,52 @@ class _SearchPageState extends State<SearchPage> {
               SizedBox(
                 width: double.infinity,
                 height: 35,
-                child: ListView.builder(
-                  shrinkWrap: true,
+                child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: filter.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 9),
-                      child: InputChip(
-                        showCheckmark: false,
-                        onPressed: () {
-                          setState(() {
-                            // check[index] = !check[index];
-                            check[index] = true;
-                            check.setRange(
-                              0,
-                              check.length,
-                              [false],
-                              index,
-                            );
-                          });
-                        },
-                        label: Text(
-                          filter[index],
-                          style: GoogleFonts.plusJakartaSans(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: check[index]
-                                ? FontWeight.w800
-                                : FontWeight.w600,
+                  children: List<Widget>.generate(
+                    filter.length,
+                    (int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 9),
+                        child: InputChip(
+                          // showCheckmark: false,
+                          label: Text(
+                            filter[index],
+                            style: GoogleFonts.plusJakartaSans(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: selectedIndex == index
+                                  ? FontWeight.w800
+                                  : FontWeight.w700,
+                            ),
                           ),
+                          selected: selectedIndex == index,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              if (selectedIndex == index) {
+                                selectedIndex = null;
+                              } else {
+                                selectedIndex = index;
+                              }
+                              context.read<SearchBloc>().add(
+                                    SearchFilm(
+                                      title: '',
+                                      genre: selected
+                                          ? filter[selectedIndex!]
+                                          : '',
+                                    ),
+                                  );
+                              selected
+                                  ? selectedGenre = filter[selectedIndex!]
+                                  : '';
+
+                              debug.log('$selected');
+                            });
+                          },
                         ),
-                        selected: check[index],
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ).toList(),
                 ),
               ),
               courseLayout(context),

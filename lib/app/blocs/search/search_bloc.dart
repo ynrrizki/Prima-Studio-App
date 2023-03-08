@@ -25,15 +25,25 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   void _onSearchFilm(SearchFilm event, Emitter<SearchState> emit) {
     List<Film> films = (_filmBloc.state as FilmLoaded).films;
+    List<Film> searchResult = films;
+
     if (event.title.isNotEmpty) {
-      List<Film> searchResult = films
+      searchResult = searchResult
           .where((film) =>
-              film.title!.toLowerCase().startsWith(event.title.toLowerCase()))
+              film.title!.toLowerCase().contains(event.title.toLowerCase()))
           .toList();
       emit(SearchLoaded(films: searchResult));
-    } else {
-      emit(SearchLoaded(films: films));
     }
+
+    if (event.genre.isNotEmpty) {
+      searchResult = searchResult
+          .where((film) =>
+              film.genre!.toLowerCase().contains(event.genre.toLowerCase()))
+          .toList();
+      emit(SearchLoaded(films: searchResult));
+    }
+
+    emit(SearchLoaded(films: searchResult));
   }
 
   void _onUpdateResult(UpdateResult event, Emitter<SearchState> emit) {}

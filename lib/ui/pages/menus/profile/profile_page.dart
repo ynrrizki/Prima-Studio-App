@@ -21,13 +21,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore user = FirebaseFirestore.instance;
-  final Uri url =
-      Uri.parse('https://api.whatsapp.com/send?phone=6285697837912');
+  final Uri whatsapp = Uri.parse(
+    Uri.encodeFull("whatsapp://send?phone=6285697837912"),
+  );
 
   // ignore: no_leading_underscores_for_local_identifiers
   Future<void> _launchUrl() async {
-    if (!await launchUrl(url)) {
-      throw 'Could not launch $url';
+    if (!await launchUrl(whatsapp)) {
+      throw 'Could not launch $whatsapp';
     }
   }
 
@@ -66,150 +67,160 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               );
             } else if (state is ProfileLoaded) {
-              return ListView(
+              return Padding(
                 padding: const EdgeInsets.only(
                   left: 16,
                   right: 16,
                 ),
-                children: [
-                  ProfileSectionWidget(avatar: state.user.avatar),
-                  Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: GoogleFonts.plusJakartaSans(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '${state.user.name}\n',
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProfileSectionWidget(avatar: state.user.avatar),
+                      Center(
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
                             style: GoogleFonts.plusJakartaSans(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '${state.user.name}\n',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${state.user.description}\n',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        elevation: 0,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(
+                              '/profile-account',
+                              arguments:
+                                  AccountSettingArguments(user: state.user),
+                            );
+                          },
+                          child: ListTile(
+                            tileColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: Theme.of(context).highlightColor,
+                              child: const Icon(
+                                CupertinoIcons.profile_circled,
+                                size: 35,
+                              ),
+                            ),
+                            title: const Text('Account'),
+                            subtitle: const Text('Manage your account'),
+                          ),
+                        ),
+                      ),
+                      const Divider(thickness: 2),
+                      Card(
+                        elevation: 0,
+                        child: InkWell(
+                          onTap: _launchUrl,
+                          child: ListTile(
+                            tileColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: Theme.of(context).highlightColor,
+                              child: const Icon(
+                                CupertinoIcons.ellipses_bubble,
+                                size: 35,
+                              ),
+                            ),
+                            title: const Text('Admin Chat'),
+                            subtitle: const Text('Use our services'),
+                          ),
+                        ),
+                      ),
+                      // ! MASIH MASA DEVELOP
+                      // const Divider(thickness: 2),
+                      // Card(
+                      //   elevation: 0,
+                      //   child: InkWell(
+                      //     onTap: () {},
+                      //     child: const ListTile(
+                      //       leading: CircleAvatar(
+                      //         backgroundColor: Colors.white,
+                      //         foregroundColor: Colors.black,
+                      //         child: Icon(
+                      //           CupertinoIcons.bell,
+                      //           size: 35,
+                      //           color: Colors.black87,
+                      //         ),
+                      //       ),
+                      //       title: Text('Notification'),
+                      //       subtitle: Text('Set your notifications'),
+                      //     ),
+                      //   ),
+                      // ),
+                      const Divider(thickness: 2),
+                      Card(
+                        elevation: 0,
+                        child: SwitchListTile(
+                          tileColor: Theme.of(context).scaffoldBackgroundColor,
+                          activeColor: Theme.of(context).primaryColor,
+                          secondary: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Theme.of(context).highlightColor,
+                            child: Icon(
+                              apperanceValue
+                                  ? CupertinoIcons.brightness
+                                  : Icons.mode_night_outlined,
+                              size: 35,
                             ),
                           ),
-                          TextSpan(
-                            text: '${state.user.description}\n',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context, rootNavigator: true).pushNamed(
-                          '/profile-account',
-                          arguments: AccountSettingArguments(user: state.user),
-                        );
-                      },
-                      child: ListTile(
-                        tileColor: Theme.of(context).scaffoldBackgroundColor,
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Theme.of(context).highlightColor,
-                          child: const Icon(
-                            CupertinoIcons.profile_circled,
-                            size: 35,
-                          ),
-                        ),
-                        title: const Text('Account'),
-                        subtitle: const Text('Manage your account'),
-                      ),
-                    ),
-                  ),
-                  const Divider(thickness: 2),
-                  Card(
-                    elevation: 0,
-                    child: InkWell(
-                      onTap: _launchUrl,
-                      child: ListTile(
-                        tileColor: Theme.of(context).scaffoldBackgroundColor,
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Theme.of(context).highlightColor,
-                          child: const Icon(
-                            CupertinoIcons.ellipses_bubble,
-                            size: 35,
-                          ),
-                        ),
-                        title: const Text('Admin Chat'),
-                        subtitle: const Text('Use our services'),
-                      ),
-                    ),
-                  ),
-                  // ! MASIH MASA DEVELOP
-                  // const Divider(thickness: 2),
-                  // Card(
-                  //   elevation: 0,
-                  //   child: InkWell(
-                  //     onTap: () {},
-                  //     child: const ListTile(
-                  //       leading: CircleAvatar(
-                  //         backgroundColor: Colors.white,
-                  //         foregroundColor: Colors.black,
-                  //         child: Icon(
-                  //           CupertinoIcons.bell,
-                  //           size: 35,
-                  //           color: Colors.black87,
-                  //         ),
-                  //       ),
-                  //       title: Text('Notification'),
-                  //       subtitle: Text('Set your notifications'),
-                  //     ),
-                  //   ),
-                  // ),
-                  const Divider(thickness: 2),
-                  Card(
-                    elevation: 0,
-                    child: SwitchListTile(
-                      tileColor: Theme.of(context).scaffoldBackgroundColor,
-                      activeColor: Theme.of(context).primaryColor,
-                      secondary: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: Theme.of(context).highlightColor,
-                        child: Icon(
-                          apperanceValue
-                              ? CupertinoIcons.brightness
-                              : Icons.mode_night_outlined,
-                          size: 35,
+                          title: apperanceValue
+                              ? const Text('Light Mode')
+                              : const Text('Dark Mode'),
+                          subtitle: const Text('Change theme app'),
+                          value: apperanceValue,
+                          onChanged: (value) {
+                            setState(() {
+                              ThemeRepository.putThemeSettings(value);
+                              apperanceValue =
+                                  ThemeRepository.getThemeSettings();
+                            });
+                            final cubit = context.read<ThemeCubit>();
+                            cubit.toggleTheme(apperanceValue);
+                          },
                         ),
                       ),
-                      title: apperanceValue
-                          ? const Text('Light Mode')
-                          : const Text('Dark Mode'),
-                      subtitle: const Text('Change theme app'),
-                      value: apperanceValue,
-                      onChanged: (value) {
-                        setState(() {
-                          ThemeRepository.putThemeSettings(value);
-                          apperanceValue = ThemeRepository.getThemeSettings();
-                        });
-                        final cubit = context.read<ThemeCubit>();
-                        cubit.toggleTheme(apperanceValue);
-                      },
-                    ),
+                      const Divider(thickness: 2),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamedAndRemoveUntil(
+                                  '/auth-login', (route) => false);
+                          context.read<AuthCubit>().signOut();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          minimumSize: const Size(double.infinity, 25),
+                        ),
+                        child: const Text('Sign Out'),
+                      ),
+                    ],
                   ),
-                  const Divider(thickness: 2),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true)
-                          .pushNamedAndRemoveUntil(
-                              '/auth-login', (route) => false);
-                      context.read<AuthCubit>().signOut();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                    ),
-                    child: const Text('Sign Out'),
-                  ),
-                ],
+                ),
               );
             } else {
               return const Center(

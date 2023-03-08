@@ -158,6 +158,7 @@ class ProfileSectionWidget extends StatelessWidget {
                           onPressed: () {},
                           backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
+                          foregroundColor: Theme.of(context).primaryColor,
                           child: const Icon(CupertinoIcons.camera),
                         ),
                         const SizedBox(height: 10),
@@ -171,6 +172,7 @@ class ProfileSectionWidget extends StatelessWidget {
                           onPressed: () {},
                           backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
+                          foregroundColor: Theme.of(context).primaryColor,
                           child: const Icon(Icons.add_photo_alternate_outlined),
                         ),
                         const SizedBox(height: 10),

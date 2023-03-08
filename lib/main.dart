@@ -67,9 +67,9 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             )..add(LoadProfile()),
           ),
-          BlocProvider(
-            create: (context) => UserCubit(),
-          ),
+          // BlocProvider(
+          //   create: (context) => UserCubit(),
+          // ),
           BlocProvider(
             create: (context) => ThemeCubit(),
           ),
